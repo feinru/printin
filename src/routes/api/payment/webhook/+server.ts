@@ -6,7 +6,9 @@ import { submitPrintJob } from '$lib/server/print';
 import { broadcast } from '$lib/server/ws';
 import crypto from 'crypto';
 
-const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY;
+import { env } from '$env/dynamic/private';
+
+const MIDTRANS_SERVER_KEY = env.MIDTRANS_SERVER_KEY;
 
 export const POST: RequestHandler = async ({ request }) => {
   if (!MIDTRANS_SERVER_KEY) {

@@ -4,9 +4,11 @@ import { updatePaymentStatus, updateJobStatus } from './db';
 import { broadcast } from './ws';
 import type { Payment } from '$lib/types';
 
-const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY;
+import { env } from '$env/dynamic/private';
+
+const MIDTRANS_SERVER_KEY = env.MIDTRANS_SERVER_KEY;
 const MIDTRANS_API_URL = 'https://api.sandbox.midtrans.com/v2/charge';
-const MOCK_CONFIRM_DELAY_MS = parseInt(process.env.MOCK_CONFIRM_DELAY_MS ?? '8000', 10);
+const MOCK_CONFIRM_DELAY_MS = parseInt(env.MOCK_CONFIRM_DELAY_MS ?? '8000', 10);
 
 export function isMidtransConfigured(): boolean {
   return !!MIDTRANS_SERVER_KEY;

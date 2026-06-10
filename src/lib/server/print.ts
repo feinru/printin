@@ -7,7 +7,7 @@ import { broadcast } from './ws';
 import type { Job } from '$lib/types';
 import { spawn } from 'child_process';
 
-const IS_MOCK = true; // Always mock in demo. Set to false + configure PRINTER_NAME for real CUPS.
+const IS_MOCK = false; // Always mock in demo. Set to false + configure PRINTER_NAME for real CUPS.
 
 export interface PrintResult {
   success: boolean;
@@ -59,7 +59,7 @@ function spawnAsync(cmd: string, args: string[]): Promise<{ stdout: string; code
 }
 
 async function submitReal(job: Job): Promise<PrintResult> {
-  const printerName = process.env.PRINTER_NAME ?? 'default';
+  const printerName = process.env.PRINTER_NAME ?? 'Printer_Atha';
   const { options, file_path } = job;
 
   const args = [

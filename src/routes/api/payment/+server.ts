@@ -15,7 +15,13 @@ export const POST: RequestHandler = async ({ request }) => {
   if (job.price <= 0) error(400, 'Job has no price set — configure options first');
 
   const paymentId = randomUUID();
-  const qrData = await generateQrisQr(paymentId, job.price);
+  let qrData: string;
+  try {
+    qrData = await generateQrisQr(paymentId, job.price);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    error(400, `Payment generation failed: ${msg}`);
+  }
   const payment = createPayment(paymentId, job.id, job.price, qrData);
 
   // In demo mode, auto-confirm after delay
